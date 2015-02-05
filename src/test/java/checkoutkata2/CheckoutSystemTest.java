@@ -17,4 +17,11 @@ public class CheckoutSystemTest {
         assertThat(totalPrice, is(equalTo(60)));
     }
 
+    @Test
+    public void calculatesTotalCostOfTwoSameItems() {
+        int totalPrice = checkoutSystem.checkout("Apple", "Apple");
+
+        assertThat(totalPrice, is(equalTo(120)));
+    }
+
 }
