@@ -22,16 +22,16 @@ public class CheckoutSystem {
             int applePrice = 60;
             int multiplesOfTwo = itemNameAndCount.getValue().intValue() / 2;
             int remainingItems = itemNameAndCount.getValue().intValue() % 2;
-            return applePrice * multiplesOfTwo + applePrice * remainingItems;
+            return multiplesOfTwo * applePrice  + remainingItems * applePrice;
         }
-        return priceOf(itemNameAndCount.getKey()) * itemNameAndCount.getValue().intValue();
-    }
+        if (itemNameAndCount.getKey().equals("Orange")) {
+            int orangePrice = 25;
+            int multiplesOfThree = itemNameAndCount.getValue().intValue() / 3;
+            int remainingItems = itemNameAndCount.getValue().intValue() % 3;
+            return multiplesOfThree * orangePrice * 2 + remainingItems * orangePrice;
 
-    private static int priceOf(String item) {
-        switch (item) {
-            case "Orange": return 25;
         }
-        throw new IllegalArgumentException(String.format("Price of %s is not defined", item));
+        throw new IllegalArgumentException(String.format("Price of %s is not defined", itemNameAndCount.getKey()));
     }
 
 }

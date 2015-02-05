@@ -45,5 +45,12 @@ public class CheckoutSystemTest {
 
         assertThat(totalPrice, is(equalTo(APPLE_PRICE)));
     }
+    
+    @Test
+    public void calculatesTotalCostOfThreeOrangesInOfferBuyTwoGetOneFree() {
+        int totalPrice = checkoutSystem.checkout("Orange", "Orange", "Orange");
+
+        assertThat(totalPrice, is(equalTo(ORANGE_PRICE * 2)));
+    }
 
 }
