@@ -2,9 +2,9 @@ package checkoutkata2;
 
 import org.junit.Test;
 
-import static com.shazam.shazamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CheckoutSystemTest {
 
