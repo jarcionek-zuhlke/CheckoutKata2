@@ -22,21 +22,28 @@ public class CheckoutSystemTest {
 
     @Test
     public void calculatesTotalCostOfTwoSameItems() {
-        int totalPrice = checkoutSystem.checkout("Apple", "Apple");
+        int totalPrice = checkoutSystem.checkout("Orange", "Orange");
 
-        assertThat(totalPrice, is(equalTo(APPLE_PRICE * 2)));
+        assertThat(totalPrice, is(equalTo(ORANGE_PRICE * 2)));
     }
 
     @Test
     public void calculatesTotalCostOfMultipleVariousItems() {
-        int totalPrice = checkoutSystem.checkout("Apple", "Apple", "Orange", "Apple");
+        int totalPrice = checkoutSystem.checkout("Apple", "Orange", "Orange");
 
-        assertThat(totalPrice, is(equalTo(APPLE_PRICE * 3 + ORANGE_PRICE)));
+        assertThat(totalPrice, is(equalTo(APPLE_PRICE + ORANGE_PRICE * 2)));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void throwsExceptionWhenPriceOfItemIsUndefined() {
         checkoutSystem.checkout("Non-Existing-Item");
+    }
+
+    @Test
+    public void calculatesTotalCostOfTwoApplesInOfferBuyOneGetOneFree() {
+        int totalPrice = checkoutSystem.checkout("Apple", "Apple");
+
+        assertThat(totalPrice, is(equalTo(APPLE_PRICE)));
     }
 
 }
