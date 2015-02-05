@@ -1,7 +1,5 @@
 package checkoutkata2;
 
-import java.util.Map;
-
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -13,25 +11,22 @@ public class CheckoutSystem {
         return stream(items)
                 .collect(groupingBy(item -> item, counting()))
                 .entrySet().stream()
-                .mapToInt(itemNameAndCount -> totalPriceOf(itemNameAndCount))
+                .mapToInt(entry -> totalPriceOfItemWithOffer(entry.getKey(), entry.getValue().intValue()))
                 .sum();
     }
 
-    private int totalPriceOf(Map.Entry<String, Long> itemNameAndCount) {
-        if (itemNameAndCount.getKey().equals("Apple")) {
-            int applePrice = 60;
-            int multiplesOfTwo = itemNameAndCount.getValue().intValue() / 2;
-            int remainingItems = itemNameAndCount.getValue().intValue() % 2;
-            return multiplesOfTwo * applePrice  + remainingItems * applePrice;
+    private static int totalPriceOfItemWithOffer(String itemName, int itemCount) {
+        switch (itemName) {
+            case "Apple":  return totalPriceOfItem(itemCount, 60, new Offer(2, 60));
+            case "Orange": return totalPriceOfItem(itemCount, 25, new Offer(3, 50));
         }
-        if (itemNameAndCount.getKey().equals("Orange")) {
-            int orangePrice = 25;
-            int multiplesOfThree = itemNameAndCount.getValue().intValue() / 3;
-            int remainingItems = itemNameAndCount.getValue().intValue() % 3;
-            return multiplesOfThree * orangePrice * 2 + remainingItems * orangePrice;
+        throw new IllegalArgumentException(String.format("Price of %s is not defined", itemName));
+    }
 
-        }
-        throw new IllegalArgumentException(String.format("Price of %s is not defined", itemNameAndCount.getKey()));
+    private static int totalPriceOfItem(int itemCount, int applePrice, Offer appleOffer) {
+        int multiples = itemCount / appleOffer.getItemCount();
+        int remainingItems = itemCount % appleOffer.getItemCount();
+        return multiples * appleOffer.getSpecialPrice() + remainingItems * applePrice;
     }
 
 }
