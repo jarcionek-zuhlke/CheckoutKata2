@@ -34,4 +34,9 @@ public class CheckoutSystemTest {
         assertThat(totalPrice, is(equalTo(APPLE_PRICE * 3 + ORANGE_PRICE)));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void throwsExceptionWhenPriceOfItemIsUndefined() {
+        checkoutSystem.checkout("Non-Existing-Item");
+    }
+
 }
